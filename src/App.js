@@ -3,6 +3,36 @@ import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
+  componentDidMount () {
+    const { loadFacebookSDK, initFacebookApp } = this
+    loadFacebookSDK()
+    initFacebookApp()
+  }
+  loadFacebookSDK = () => {
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+  }
+  initFacebookApp = () => {
+    window.fbAsyncInit = function() {
+      window.FB.init({
+        appId      : '458022411244141',
+        cookie     : true,  // enable cookies to allow the server to access 
+				// the session
+        xfbml      : true,  // parse social plugins on this page
+        version    : 'v2.8' // use graph api version 2.8
+      });
+
+      window.FB.getLoginStatus(function(response) {
+        console.log(response)
+      });
+    };
+
+  }
   render() {
     return (
       <div className="App">
